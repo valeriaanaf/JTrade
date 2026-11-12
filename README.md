@@ -1,2 +1,2 @@
 # JTrade
-Aplikasi jurnal Trading 
+Aplikasi trading jurnal bernama JTrade.
