@@ -1,0 +1,73 @@
+Table users {
+  id bigserial [pk]
+  name varchar(255)
+  email varchar(255) [unique]
+  password varchar(255)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table personal_access_tokens {
+  id bigserial [pk]
+  tokenable_id bigint
+  name text
+  token varchar(64) [unique]
+  abilities text [null]
+  last_used_at timestamp [null]
+  expires_at timestamp [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table trading_accounts {
+  id bigserial [pk]
+  user_id bigint
+  name varchar(100)
+  account_login varchar(50)
+  server varchar(100) [null]
+  currency varchar(3)
+  initial_balance numeric(14,2) [default: 0]
+  is_active boolean [default: true]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table trades {
+  id bigserial [pk]
+  user_id bigint
+  account_id bigint
+  traded_at timestamp
+  pair varchar(20)
+  direction varchar(4)
+  lot numeric(8,2)
+  entry numeric(14,5)
+  stop_loss numeric(14,5) [null]
+  take_profit numeric(14,5) [null]
+  exit_price numeric(14,5) [null]
+  profit_loss numeric(14,2)
+  setup varchar(100) [null]
+  emotion varchar(50) [null]
+  followed_plan boolean [null]
+  notes text [null]
+  created_at timestamp
+  updated_at timestamp
+  indexes {
+    (user_id, account_id, traded_at)
+  }
+}
+
+Table trading_plans {
+  id bigserial [pk]
+  user_id bigint [unique]
+  checklist jsonb [null]
+  max_trades_per_day smallint [null]
+  max_daily_loss numeric(14,2) [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: personal_access_tokens.tokenable_id > users.id
+Ref: trading_accounts.user_id > users.id
+Ref: trades.user_id > users.id
+Ref: trades.account_id > trading_accounts.id
+Ref: trading_plans.user_id - users.id
