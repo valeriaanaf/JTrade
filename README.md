@@ -1,0 +1,2 @@
+# JTrade
+Aplikasi jurnal Trading 
