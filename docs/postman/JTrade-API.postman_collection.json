@@ -1,0 +1,2142 @@
+{
+  "info": {
+    "name": "JTrade API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "API Contract JTrade (Laravel + PostgreSQL). Format response: {success, message, data}. Semua endpoint selain /ping, /auth/register, /auth/login memerlukan Bearer token."
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "00 Umum",
+      "description": "",
+      "item": [
+        {
+          "name": "Ping",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ping",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ping"
+              ]
+            },
+            "description": "Cek API hidup. Publik, tanpa token.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/ping",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "ping"
+                  ]
+                },
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "01 Auth",
+      "description": "Autentikasi berbasis token Sanctum (Bearer).",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Daftar pengguna baru. Nama wajib, email unik, password minimal 8 karakter. Mengembalikan token Sanctum.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Vale\",\n  \"email\": \"vale@example.com\",\n  \"password\": \"rahasia123\",\n  \"password_confirmation\": \"rahasia123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Vale\",\n  \"email\": \"vale@example.com\",\n  \"password\": \"rahasia123\",\n  \"password_confirmation\": \"rahasia123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Registrasi berhasil\",\n  \"data\": {\n    \"token\": \"1|abcdef...\",\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Vale\",\n      \"email\": \"vale@example.com\"\n    }\n  }\n}"
+            },
+            {
+              "name": "422 Validasi",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Vale\",\n  \"email\": \"vale@example.com\",\n  \"password\": \"rahasia123\",\n  \"password_confirmation\": \"rahasia123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Data tidak valid.\",\n  \"data\": {\n    \"email\": [\n      \"Email sudah terdaftar.\"\n    ]\n  }\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "if (j.success && j.data && j.data.token) { pm.environment.set('token', j.data.token); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Login. Token otomatis disimpan ke variabel environment {{token}}.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"vale@example.com\",\n  \"password\": \"rahasia123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"vale@example.com\",\n  \"password\": \"rahasia123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Login berhasil\",\n  \"data\": {\n    \"token\": \"2|abcdef...\",\n    \"user\": {\n      \"id\": 1,\n      \"name\": \"Vale\",\n      \"email\": \"vale@example.com\"\n    }\n  }\n}"
+            },
+            {
+              "name": "401 Salah",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"vale@example.com\",\n  \"password\": \"rahasia123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Email atau password salah.\",\n  \"data\": null\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "if (j.success && j.data && j.data.token) { pm.environment.set('token', j.data.token); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            },
+            "description": "Menghapus token yang sedang dipakai. Perlu token."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/logout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Logout berhasil\",\n  \"data\": null\n}"
+            },
+            {
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/logout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Unauthenticated.\",\n  \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "description": "Data pengguna yang sedang login."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "me"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Vale\",\n    \"email\": \"vale@example.com\"\n  }\n}"
+            },
+            {
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "me"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Unauthenticated.\",\n  \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02 Akun Trading",
+      "description": "Mata uang ditetapkan per akun (USD atau IDR).",
+      "item": [
+        {
+          "name": "Daftar akun",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "accounts"
+              ]
+            },
+            "description": "Semua akun milik pengguna."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/accounts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Akun XAUUSD\",\n      \"account_login\": \"12345678\",\n      \"server\": \"Broker-Demo\",\n      \"currency\": \"USD\",\n      \"initial_balance\": \"1000.00\",\n      \"is_active\": true\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Tambah akun",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "accounts"
+              ]
+            },
+            "description": "currency hanya USD atau IDR. Password akun trading TIDAK disimpan di server.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Akun XAUUSD\",\n  \"account_login\": \"12345678\",\n  \"server\": \"Broker-Demo\",\n  \"currency\": \"USD\",\n  \"initial_balance\": 1000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/accounts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Akun XAUUSD\",\n  \"account_login\": \"12345678\",\n  \"server\": \"Broker-Demo\",\n  \"currency\": \"USD\",\n  \"initial_balance\": 1000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Akun dibuat\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Akun XAUUSD\",\n    \"account_login\": \"12345678\",\n    \"server\": \"Broker-Demo\",\n    \"currency\": \"USD\",\n    \"initial_balance\": \"1000.00\",\n    \"is_active\": true\n  }\n}"
+            },
+            {
+              "name": "422 Validasi",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/accounts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Akun XAUUSD\",\n  \"account_login\": \"12345678\",\n  \"server\": \"Broker-Demo\",\n  \"currency\": \"USD\",\n  \"initial_balance\": 1000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Data tidak valid.\",\n  \"data\": {\n    \"currency\": [\n      \"Mata uang harus USD atau IDR.\"\n    ]\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Detail akun",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "accounts",
+                "1"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/accounts/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Akun XAUUSD\",\n    \"account_login\": \"12345678\",\n    \"server\": \"Broker-Demo\",\n    \"currency\": \"USD\",\n    \"initial_balance\": \"1000.00\",\n    \"is_active\": true\n  }\n}"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/accounts/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "1"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Data tidak ditemukan.\",\n  \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Ubah akun",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "accounts",
+                "1"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Akun XAUUSD\",\n  \"account_login\": \"12345678\",\n  \"server\": \"Broker-Demo\",\n  \"currency\": \"USD\",\n  \"initial_balance\": 1000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/accounts/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "1"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Akun XAUUSD\",\n  \"account_login\": \"12345678\",\n  \"server\": \"Broker-Demo\",\n  \"currency\": \"USD\",\n  \"initial_balance\": 1000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Akun diperbarui\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Akun XAUUSD\",\n    \"account_login\": \"12345678\",\n    \"server\": \"Broker-Demo\",\n    \"currency\": \"USD\",\n    \"initial_balance\": \"1000.00\",\n    \"is_active\": true\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Hapus akun",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "accounts",
+                "1"
+              ]
+            },
+            "description": "Menghapus akun beserta trade di dalamnya."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/accounts/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Akun dihapus\",\n  \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "03 Trade",
+      "description": "",
+      "item": [
+        {
+          "name": "Daftar trade",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/trades?account_id=1&pair=XAUUSD&direction=buy&result=win&from=2026-11-01&to=2026-11-30&q=breakout&sort=newest&page=1&per_page=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "trades"
+              ],
+              "query": [
+                {
+                  "key": "account_id",
+                  "value": "1",
+                  "description": "Wajib. Akun yang dilihat"
+                },
+                {
+                  "key": "pair",
+                  "value": "XAUUSD",
+                  "description": "Opsional"
+                },
+                {
+                  "key": "direction",
+                  "value": "buy",
+                  "description": "buy atau sell"
+                },
+                {
+                  "key": "result",
+                  "value": "win",
+                  "description": "win atau loss"
+                },
+                {
+                  "key": "from",
+                  "value": "2026-11-01",
+                  "description": "Tanggal awal"
+                },
+                {
+                  "key": "to",
+                  "value": "2026-11-30",
+                  "description": "Tanggal akhir"
+                },
+                {
+                  "key": "q",
+                  "value": "breakout",
+                  "description": "Cari di pair, setup, catatan"
+                },
+                {
+                  "key": "sort",
+                  "value": "newest",
+                  "description": "newest atau oldest"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": ""
+                },
+                {
+                  "key": "per_page",
+                  "value": "20",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "Daftar trade dengan filter dan paginasi."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trades?account_id=1&pair=XAUUSD&direction=buy&result=win&from=2026-11-01&to=2026-11-30&q=breakout&sort=newest&page=1&per_page=20",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trades"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "1",
+                      "description": "Wajib. Akun yang dilihat"
+                    },
+                    {
+                      "key": "pair",
+                      "value": "XAUUSD",
+                      "description": "Opsional"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "buy",
+                      "description": "buy atau sell"
+                    },
+                    {
+                      "key": "result",
+                      "value": "win",
+                      "description": "win atau loss"
+                    },
+                    {
+                      "key": "from",
+                      "value": "2026-11-01",
+                      "description": "Tanggal awal"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-11-30",
+                      "description": "Tanggal akhir"
+                    },
+                    {
+                      "key": "q",
+                      "value": "breakout",
+                      "description": "Cari di pair, setup, catatan"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "newest",
+                      "description": "newest atau oldest"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": ""
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20",
+                      "description": ""
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"items\": [\n      {\n        \"id\": 10,\n        \"account_id\": 1,\n        \"traded_at\": \"2026-11-12 09:30:00\",\n        \"pair\": \"XAUUSD\",\n        \"direction\": \"buy\",\n        \"lot\": \"0.10\",\n        \"entry\": \"3974.15000\",\n        \"stop_loss\": \"3968.00000\",\n        \"take_profit\": \"3990.00000\",\n        \"exit_price\": \"3985.50000\",\n        \"profit_loss\": \"113.50\",\n        \"setup\": \"Breakout\",\n        \"emotion\": \"Tenang\",\n        \"followed_plan\": true,\n        \"notes\": \"Entry sesuai plan\"\n      }\n    ],\n    \"pagination\": {\n      \"current_page\": 1,\n      \"per_page\": 20,\n      \"total\": 40,\n      \"last_page\": 2\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Tambah trade",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/trades",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "trades"
+              ]
+            },
+            "description": "pair wajib, direction hanya buy atau sell, lot lebih dari 0. Akun harus milik pengguna.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": 1,\n  \"traded_at\": \"2026-11-12 09:30:00\",\n  \"pair\": \"XAUUSD\",\n  \"direction\": \"buy\",\n  \"lot\": 0.1,\n  \"entry\": 3974.15,\n  \"stop_loss\": 3968.0,\n  \"take_profit\": 3990.0,\n  \"exit_price\": 3985.5,\n  \"profit_loss\": 113.5,\n  \"setup\": \"Breakout\",\n  \"emotion\": \"Tenang\",\n  \"followed_plan\": true,\n  \"notes\": \"Entry sesuai plan\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trades",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trades"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": 1,\n  \"traded_at\": \"2026-11-12 09:30:00\",\n  \"pair\": \"XAUUSD\",\n  \"direction\": \"buy\",\n  \"lot\": 0.1,\n  \"entry\": 3974.15,\n  \"stop_loss\": 3968.0,\n  \"take_profit\": 3990.0,\n  \"exit_price\": 3985.5,\n  \"profit_loss\": 113.5,\n  \"setup\": \"Breakout\",\n  \"emotion\": \"Tenang\",\n  \"followed_plan\": true,\n  \"notes\": \"Entry sesuai plan\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Trade dicatat\",\n  \"data\": {\n    \"id\": 10,\n    \"account_id\": 1,\n    \"traded_at\": \"2026-11-12 09:30:00\",\n    \"pair\": \"XAUUSD\",\n    \"direction\": \"buy\",\n    \"lot\": \"0.10\",\n    \"entry\": \"3974.15000\",\n    \"stop_loss\": \"3968.00000\",\n    \"take_profit\": \"3990.00000\",\n    \"exit_price\": \"3985.50000\",\n    \"profit_loss\": \"113.50\",\n    \"setup\": \"Breakout\",\n    \"emotion\": \"Tenang\",\n    \"followed_plan\": true,\n    \"notes\": \"Entry sesuai plan\"\n  }\n}"
+            },
+            {
+              "name": "422 Validasi",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trades",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trades"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": 1,\n  \"traded_at\": \"2026-11-12 09:30:00\",\n  \"pair\": \"XAUUSD\",\n  \"direction\": \"buy\",\n  \"lot\": 0.1,\n  \"entry\": 3974.15,\n  \"stop_loss\": 3968.0,\n  \"take_profit\": 3990.0,\n  \"exit_price\": 3985.5,\n  \"profit_loss\": 113.5,\n  \"setup\": \"Breakout\",\n  \"emotion\": \"Tenang\",\n  \"followed_plan\": true,\n  \"notes\": \"Entry sesuai plan\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Data tidak valid.\",\n  \"data\": {\n    \"direction\": [\n      \"Arah harus buy atau sell.\"\n    ]\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Detail trade",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/trades/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "trades",
+                "10"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trades/10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trades",
+                    "10"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"id\": 10,\n    \"account_id\": 1,\n    \"traded_at\": \"2026-11-12 09:30:00\",\n    \"pair\": \"XAUUSD\",\n    \"direction\": \"buy\",\n    \"lot\": \"0.10\",\n    \"entry\": \"3974.15000\",\n    \"stop_loss\": \"3968.00000\",\n    \"take_profit\": \"3990.00000\",\n    \"exit_price\": \"3985.50000\",\n    \"profit_loss\": \"113.50\",\n    \"setup\": \"Breakout\",\n    \"emotion\": \"Tenang\",\n    \"followed_plan\": true,\n    \"notes\": \"Entry sesuai plan\"\n  }\n}"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trades/10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trades",
+                    "10"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Data tidak ditemukan.\",\n  \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Ubah trade",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/trades/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "trades",
+                "10"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": 1,\n  \"traded_at\": \"2026-11-12 09:30:00\",\n  \"pair\": \"XAUUSD\",\n  \"direction\": \"buy\",\n  \"lot\": 0.1,\n  \"entry\": 3974.15,\n  \"stop_loss\": 3968.0,\n  \"take_profit\": 3990.0,\n  \"exit_price\": 3985.5,\n  \"profit_loss\": 113.5,\n  \"setup\": \"Breakout\",\n  \"emotion\": \"Tenang\",\n  \"followed_plan\": true,\n  \"notes\": \"Entry sesuai plan\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trades/10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trades",
+                    "10"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": 1,\n  \"traded_at\": \"2026-11-12 09:30:00\",\n  \"pair\": \"XAUUSD\",\n  \"direction\": \"buy\",\n  \"lot\": 0.1,\n  \"entry\": 3974.15,\n  \"stop_loss\": 3968.0,\n  \"take_profit\": 3990.0,\n  \"exit_price\": 3985.5,\n  \"profit_loss\": 113.5,\n  \"setup\": \"Breakout\",\n  \"emotion\": \"Tenang\",\n  \"followed_plan\": true,\n  \"notes\": \"Entry sesuai plan\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Trade diperbarui\",\n  \"data\": {\n    \"id\": 10,\n    \"account_id\": 1,\n    \"traded_at\": \"2026-11-12 09:30:00\",\n    \"pair\": \"XAUUSD\",\n    \"direction\": \"buy\",\n    \"lot\": \"0.10\",\n    \"entry\": \"3974.15000\",\n    \"stop_loss\": \"3968.00000\",\n    \"take_profit\": \"3990.00000\",\n    \"exit_price\": \"3985.50000\",\n    \"profit_loss\": \"113.50\",\n    \"setup\": \"Breakout\",\n    \"emotion\": \"Tenang\",\n    \"followed_plan\": true,\n    \"notes\": \"Entry sesuai plan\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Hapus trade",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/trades/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "trades",
+                "10"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trades/10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trades",
+                    "10"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Trade dihapus\",\n  \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Export CSV",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/trades/export?account_id=1&from=2026-11-01&to=2026-11-30",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "trades",
+                "export"
+              ],
+              "query": [
+                {
+                  "key": "account_id",
+                  "value": "1",
+                  "description": "Wajib"
+                },
+                {
+                  "key": "from",
+                  "value": "2026-11-01",
+                  "description": "Opsional"
+                },
+                {
+                  "key": "to",
+                  "value": "2026-11-30",
+                  "description": "Opsional"
+                }
+              ]
+            },
+            "description": "Mengembalikan file text/csv. Kolom: tanggal, pair, arah, lot, entry, SL, TP, exit, P/L, setup, emosi, catatan."
+          },
+          "response": [
+            {
+              "name": "200 CSV",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trades/export?account_id=1&from=2026-11-01&to=2026-11-30",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trades",
+                    "export"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "1",
+                      "description": "Wajib"
+                    },
+                    {
+                      "key": "from",
+                      "value": "2026-11-01",
+                      "description": "Opsional"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-11-30",
+                      "description": "Opsional"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "tanggal,pair,arah,lot,entry,sl,tp,exit,pl,setup,emosi,catatan\n2026-11-12 09:30:00,XAUUSD,buy,0.10,3974.15,3968.00,3990.00,3985.50,113.50,Breakout,Tenang,Entry sesuai plan"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "04 Statistik",
+      "description": "",
+      "item": [
+        {
+          "name": "Statistik dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stats?account_id=1&period=all",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "stats"
+              ],
+              "query": [
+                {
+                  "key": "account_id",
+                  "value": "1",
+                  "description": "Wajib"
+                },
+                {
+                  "key": "period",
+                  "value": "all",
+                  "description": "7d, 1m, 3m, ytd, all"
+                }
+              ]
+            },
+            "description": "Dihitung per akun (USD dan IDR tidak pernah dijumlahkan). Data kosong mengembalikan 0."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stats?account_id=1&period=all",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "stats"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "1",
+                      "description": "Wajib"
+                    },
+                    {
+                      "key": "period",
+                      "value": "all",
+                      "description": "7d, 1m, 3m, ytd, all"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"period\": \"all\",\n    \"currency\": \"USD\",\n    \"net_pl\": 1250.4,\n    \"total_trades\": 40,\n    \"wins\": 22,\n    \"losses\": 18,\n    \"win_rate\": 55.0,\n    \"profit_factor\": 1.32,\n    \"expectancy\": 31.26,\n    \"avg_win\": 98.5,\n    \"avg_loss\": -74.2,\n    \"max_drawdown\": {\n      \"amount\": -310.5,\n      \"percent\": 2.9\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Equity curve",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stats/equity?account_id=1&period=all",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "stats",
+                "equity"
+              ],
+              "query": [
+                {
+                  "key": "account_id",
+                  "value": "1",
+                  "description": "Wajib"
+                },
+                {
+                  "key": "period",
+                  "value": "all",
+                  "description": "7d, 1m, 3m, ytd, all"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stats/equity?account_id=1&period=all",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "stats",
+                    "equity"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "1",
+                      "description": "Wajib"
+                    },
+                    {
+                      "key": "period",
+                      "value": "all",
+                      "description": "7d, 1m, 3m, ytd, all"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"currency\": \"USD\",\n    \"initial_balance\": 1000,\n    \"points\": [\n      {\n        \"date\": \"2026-11-01\",\n        \"balance\": 1000\n      },\n      {\n        \"date\": \"2026-11-02\",\n        \"balance\": 1113.5\n      }\n    ]\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "05 Kalender",
+      "description": "",
+      "item": [
+        {
+          "name": "Ringkasan bulan",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/calendar?account_id=1&month=2026-11",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "calendar"
+              ],
+              "query": [
+                {
+                  "key": "account_id",
+                  "value": "1",
+                  "description": "Wajib"
+                },
+                {
+                  "key": "month",
+                  "value": "2026-11",
+                  "description": "YYYY-MM"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/calendar?account_id=1&month=2026-11",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "calendar"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "1",
+                      "description": "Wajib"
+                    },
+                    {
+                      "key": "month",
+                      "value": "2026-11",
+                      "description": "YYYY-MM"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"month\": \"2026-11\",\n    \"summary\": {\n      \"net_pl\": 540.2,\n      \"trading_days\": 9,\n      \"green_days\": 6,\n      \"red_days\": 3,\n      \"win_rate\": 56.7\n    },\n    \"days\": [\n      {\n        \"date\": \"2026-11-03\",\n        \"net_pl\": 120.5,\n        \"trades\": 3\n      }\n    ]\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Trade pada tanggal",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/calendar/2026-11-03?account_id=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "calendar",
+                "2026-11-03"
+              ],
+              "query": [
+                {
+                  "key": "account_id",
+                  "value": "1",
+                  "description": "Wajib"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/calendar/2026-11-03?account_id=1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "calendar",
+                    "2026-11-03"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "1",
+                      "description": "Wajib"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"date\": \"2026-11-03\",\n    \"trades\": [\n      {\n        \"id\": 10,\n        \"account_id\": 1,\n        \"traded_at\": \"2026-11-12 09:30:00\",\n        \"pair\": \"XAUUSD\",\n        \"direction\": \"buy\",\n        \"lot\": \"0.10\",\n        \"entry\": \"3974.15000\",\n        \"stop_loss\": \"3968.00000\",\n        \"take_profit\": \"3990.00000\",\n        \"exit_price\": \"3985.50000\",\n        \"profit_loss\": \"113.50\",\n        \"setup\": \"Breakout\",\n        \"emotion\": \"Tenang\",\n        \"followed_plan\": true,\n        \"notes\": \"Entry sesuai plan\"\n      }\n    ]\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "06 Analitik",
+      "description": "",
+      "item": [
+        {
+          "name": "Analitik perilaku",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/analytics?account_id=1&period=all",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "analytics"
+              ],
+              "query": [
+                {
+                  "key": "account_id",
+                  "value": "1",
+                  "description": "Wajib"
+                },
+                {
+                  "key": "period",
+                  "value": "all",
+                  "description": ""
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/analytics?account_id=1&period=all",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "analytics"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "1",
+                      "description": "Wajib"
+                    },
+                    {
+                      "key": "period",
+                      "value": "all",
+                      "description": ""
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"streak\": {\n      \"longest_win\": 7,\n      \"longest_loss\": 5,\n      \"current\": {\n        \"type\": \"win\",\n        \"count\": 4\n      }\n    },\n    \"emotions\": [\n      {\n        \"emotion\": \"FOMO\",\n        \"trades\": 24,\n        \"net_pl\": -120.0,\n        \"win_rate\": 33.0\n      }\n    ],\n    \"by_pair\": [\n      {\n        \"pair\": \"XAUUSD\",\n        \"trades\": 30,\n        \"net_pl\": 900.0,\n        \"win_rate\": 57.0\n      }\n    ],\n    \"by_setup\": [\n      {\n        \"setup\": \"Breakout\",\n        \"trades\": 12,\n        \"net_pl\": 410.0,\n        \"win_rate\": 62.0\n      }\n    ],\n    \"by_hour\": [\n      {\n        \"hour\": 9,\n        \"trades\": 8,\n        \"net_pl\": 150.0\n      }\n    ],\n    \"by_weekday\": [\n      {\n        \"weekday\": \"Senin\",\n        \"trades\": 7,\n        \"net_pl\": 90.0\n      }\n    ],\n    \"plan_adherence\": {\n      \"followed\": {\n        \"trades\": 28,\n        \"net_pl\": 1100.0\n      },\n      \"not_followed\": {\n        \"trades\": 12,\n        \"net_pl\": 150.4\n      }\n    }\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "07 Trading Plan",
+      "description": "",
+      "item": [
+        {
+          "name": "Lihat plan",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/trading-plan",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "trading-plan"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trading-plan",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trading-plan"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": null,\n  \"data\": {\n    \"checklist\": [\n      \"Tren timeframe besar searah posisi\",\n      \"Stop loss ditentukan sebelum entry\",\n      \"Kondisi emosi tenang\"\n    ],\n    \"max_trades_per_day\": 3,\n    \"max_daily_loss\": 50\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Ubah plan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/trading-plan",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "trading-plan"
+              ]
+            },
+            "description": "Satu rencana per pengguna. Batas tidak boleh negatif.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"checklist\": [\n    \"Tren timeframe besar searah posisi\",\n    \"Stop loss ditentukan sebelum entry\",\n    \"Kondisi emosi tenang\"\n  ],\n  \"max_trades_per_day\": 3,\n  \"max_daily_loss\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/trading-plan",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "trading-plan"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"checklist\": [\n    \"Tren timeframe besar searah posisi\",\n    \"Stop loss ditentukan sebelum entry\",\n    \"Kondisi emosi tenang\"\n  ],\n  \"max_trades_per_day\": 3,\n  \"max_daily_loss\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Plan diperbarui\",\n  \"data\": {\n    \"checklist\": [\n      \"Tren timeframe besar searah posisi\",\n      \"Stop loss ditentukan sebelum entry\",\n      \"Kondisi emosi tenang\"\n    ],\n    \"max_trades_per_day\": 3,\n    \"max_daily_loss\": 50\n  }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
